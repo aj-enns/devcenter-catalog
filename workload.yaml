@@ -1,0 +1,6 @@
+$schema: "1.0"
+name: "devbox-customization"
+userTasks:
+  - name: oh-my-posh
+    description: "Install Oh My Posh" 
+    parameters:

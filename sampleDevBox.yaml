@@ -1,7 +1,0 @@
-version: 1.0
-# This is the developer's customization file (uploaded in the portal)
-# It calls the catalog task(s) by ID.
-tasks:
-  - task: oh-my-posh
- # lets Dev Box fetch a read token for Azure DevOps
-

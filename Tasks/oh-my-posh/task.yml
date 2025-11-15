@@ -5,7 +5,6 @@ name: Install Oh My Posh
 description: Installs JanDeDobbeleer.OhMyPosh using WinGet.
 parameters: []
 run:
-  # Dev Box task runner executes this under system context on first boot
   powershell: |
     # Install via WinGet (available on Dev Box base images)
     winget install --id JanDeDobbeleer.OhMyPosh -e --source winget --accept-source-agreements --accept-package-agreements

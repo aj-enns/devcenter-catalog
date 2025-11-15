@@ -1,21 +1,26 @@
-# Installs Oh-My-Posh using WinGet
-# Runs in system context; safe, reproducible, and constrained to what you approve.
-id: oh-my-posh
-name: Install Oh My Posh
-description: Installs JanDeDobbeleer.OhMyPosh using WinGet.
-parameters: []
-run:
-  powershell: |
-    # Install via WinGet (available on Dev Box base images)
-    winget install --id JanDeDobbeleer.OhMyPosh -e --source winget --accept-source-agreements --accept-package-agreements
+# This is an Oh My Posh installation task for Dev Box.
 
-    # Optionally place a starter theme and update PowerShell profile for all users
-    $AllUsersProfile = "$Env:ProgramData\oh-my-posh"
-    New-Item -ItemType Directory -Force -Path $AllUsersProfile | Out-Null
-    $ThemePath = Join-Path $AllUsersProfile "amro.omp.json"
-    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/amro.omp.json" -OutFile $ThemePath
+$schema: 1.0
+name: oh-my-posh
+description: Installs JanDeDobbeleer.OhMyPosh using WinGet and configures PowerShell profile.
+author: Microsoft Corporation
+command: |
+  # Install via WinGet (available on Dev Box base images)
+  winget install --id JanDeDobbeleer.OhMyPosh -e --source winget --accept-source-agreements --accept-package-agreements
 
-    $ProfileDir = "C:\Program Files\PowerShell\7\"
-    $ProfileAll = Join-Path $ProfileDir "profile.ps1"
-    if (!(Test-Path $ProfileAll)) { New-Item -ItemType File -Force -Path $ProfileAll | Out-Null }
-    Add-Content -Path $ProfileAll -Value 'oh-my-posh init pwsh --config "C:\ProgramData\oh-my-posh\amro.omp.json" | Invoke-Expression'
+  # Optionally place a starter theme and update PowerShell profile for all users
+  $AllUsersProfile = "$Env:ProgramData\oh-my-posh"
+  New-Item -ItemType Directory -Force -Path $AllUsersProfile | Out-Null
+  $ThemePath = Join-Path $AllUsersProfile "amro.omp.json"
+  Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/amro.omp.json" -OutFile $ThemePath
+
+  $ProfileDir = "C:\Program Files\PowerShell\7\"
+  $ProfileAll = Join-Path $ProfileDir "profile.ps1"
+  if (!(Test-Path $ProfileAll)) { New-Item -ItemType File -Force -Path $ProfileAll | Out-Null }
+  Add-Content -Path $ProfileAll -Value 'oh-my-posh init pwsh --config "C:\ProgramData\oh-my-posh\amro.omp.json" | Invoke-Expression'
+parameters:
+documentation:
+  notes: This task installs Oh My Posh and configures it with the Amro theme for all users.
+  examples:
+    - name: oh-my-posh
+      description: Install Oh My Posh with default configuration
